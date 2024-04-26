@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
-const useFetch = (url) => {
+
+const useFetch = (url, authorizationHeader = null) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const abortCont = new AbortController();
+
     const dataFormat = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${authorizationHeader || null}`,
       },
       signal: abortCont.signal,
     };
+
     setTimeout(() => {
       fetch(url, dataFormat)
         .then((response) => {
@@ -34,7 +38,8 @@ const useFetch = (url) => {
           }
         });
     }, 1000);
-  }, [url]);
+  }, [url, authorizationHeader]);
+
   return { data, isPending, error };
 };
 
