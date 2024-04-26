@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../auth/AuthContext";
 
-const Header = () => {
+const Header = ({ isLoggedIn, onLogout }) => {
+  const { userInfo } = useContext(AuthContext);
   const [isProductDropdownOpen, setIsProductDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -29,81 +31,64 @@ const Header = () => {
             />
           </a>
         </div>
-        {/* <div className="flex lg:hidden">
-          <button
-            type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-            onClick={toggleMobileMenu}
-          >
-            <span className="sr-only">Open main menu</span>
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
-              />
-            </svg>
-          </button>
-        </div> */}
-        <div className="hidden lg:flex lg:gap-x-12">
-          <div className="relative">
-            {/* <button
-              type="button"
-              className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900"
-              aria-expanded={isProductDropdownOpen}
-              onClick={toggleProductDropdown}
-            >
-              Events
-              <svg
-                className={`h-5 w-5 flex-none ${
-                  isProductDropdownOpen ? "rotate-180" : ""
-                }`}
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button> */}
-          </div>
-          {/* Other navigation links */}
-          <Link to={"/events"}>
-            <p
-              href="#"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              Events
-            </p>
-          </Link>
+        {isLoggedIn ? (
+          <div className="hidden lg:flex lg:gap-x-12">
+            {/* Other navigation links */}
 
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            My Bookings
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-            About Us
-          </a>
-        </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link to={"/login"}>
+            <Link to={"/events"}>
+              <p
+                href="#"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                Events
+              </p>
+            </Link>
+
             <a
               href="#"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
-              Log in <span aria-hidden="true">&rarr;</span>
+              My Bookings
             </a>
-          </Link>
-        </div>
+
+            <a
+              href="#"
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              About Us
+            </a>
+          </div>
+        ) : (
+          <div className="hidden lg:flex lg:gap-x-12">
+            <a
+              href="#"
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              About Us
+            </a>
+          </div>
+        )}
+        {isLoggedIn ? (
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <button
+              onClick={onLogout} // Call onLogout function when logout button is clicked
+              className="bg-blue-900 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+            <Link to={"/login"}>
+              <a
+                href="#"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                Log in <span aria-hidden="true">&rarr;</span>
+              </a>
+            </Link>
+          </div>
+        )}
       </nav>
       {/* Mobile menu */}
       <div
