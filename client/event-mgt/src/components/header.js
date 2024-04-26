@@ -14,6 +14,7 @@ const Header = ({ isLoggedIn, onLogout }) => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
+  const isAdmin = userInfo?.is_admin;
 
   return (
     <header className="bg-blue-300">
@@ -57,6 +58,23 @@ const Header = ({ isLoggedIn, onLogout }) => {
             >
               About Us
             </a>
+            {isAdmin && (
+              <>
+                <a
+                  href="#"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Manage Events
+                </a>
+                <a
+                  href="#"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Manage Users
+                </a>
+                {/* Add more admin-specific links here */}
+              </>
+            )}
           </div>
         ) : (
           <div className="hidden lg:flex lg:gap-x-12">

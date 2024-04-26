@@ -38,7 +38,7 @@ const useFetch = (url, authorizationHeader = null) => {
           }
         });
     }, 1000);
-  }, [url, authorizationHeader]);
+  }, [data]);
 
   return { data, isPending, error };
 };
