@@ -9,7 +9,6 @@ route.use(express.json());
 // User registration
 route.post("/register", async (req, res) => {
   const { username, email, password, isAdmin } = req.body;
-  s;
 
   try {
     // Check if the username or email already exists
