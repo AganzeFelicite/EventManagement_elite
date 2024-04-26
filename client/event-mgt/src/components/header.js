@@ -72,6 +72,12 @@ const Header = ({ isLoggedIn, onLogout }) => {
                 >
                   Manage Users
                 </a>
+                <a
+                  href="#"
+                  className="text-sm font-semibold leading-6 text-gray-900"
+                >
+                  Create new Admins
+                </a>
                 {/* Add more admin-specific links here */}
               </>
             )}
