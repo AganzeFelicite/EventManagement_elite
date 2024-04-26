@@ -108,7 +108,10 @@ const UserLogin = ({ onLogin }) => {
         <div className="mb-4">
           <Link to="/signup">
             <h4>
-              don't have a account? <a className="text-blue-700">click me</a>
+              don't have a account?{" "}
+              <Link to="/signup">
+                <a className="text-blue-700">click me</a>
+              </Link>
             </h4>
           </Link>
         </div>
