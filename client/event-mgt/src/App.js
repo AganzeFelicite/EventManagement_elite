@@ -12,6 +12,9 @@ import {
 } from "react-router-dom";
 import { AuthContext } from "./auth/AuthContext";
 import Signup from "./components/signup";
+import CreateAdmin from "./components/createAdmin";
+import UserList from "./components/userList";
+import MyTickets from "./components/myTickets";
 
 export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,7 +43,26 @@ export default function App() {
             path="/events"
             element={!isLoggedIn ? <UserLogin /> : <EventList />}
           />
-
+          <Route
+            path="/new-admin"
+            element={
+              !isLoggedIn && userInfo?.is_admin ? (
+                <UserLogin />
+              ) : (
+                <CreateAdmin />
+              )
+            }
+          />
+          <Route
+            path="/my_tickets"
+            element={
+              !isLoggedIn && userInfo?.is_admin ? <UserLogin /> : <MyTickets />
+            }
+          />
+          <Route
+            path="/user-list"
+            element={!isLoggedIn ? <UserLogin /> : <UserList />}
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Navigate to="/" />} />
           <Route path="/login" element={<UserLogin />} />

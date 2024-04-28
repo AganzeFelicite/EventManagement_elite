@@ -14,7 +14,7 @@ const Header = ({ isLoggedIn, onLogout }) => {
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-  const isAdmin = userInfo?.is_admin;
+  const isAdmin = userInfo?.is_admin === true;
 
   return (
     <header className="bg-blue-300">
@@ -44,13 +44,22 @@ const Header = ({ isLoggedIn, onLogout }) => {
                 Events
               </p>
             </Link>
-
-            <a
-              href="#"
-              className="text-sm font-semibold leading-6 text-gray-900"
-            >
-              My Bookings
-            </a>
+            <Link to="/my_tickets">
+              <a
+                href="#"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                My Bookings
+              </a>
+            </Link>
+            <Link to="/manage_booking">
+              <a
+                href="#"
+                className="text-sm font-semibold leading-6 text-gray-900"
+              >
+                Manage Bookings
+              </a>
+            </Link>
 
             <a
               href="#"
@@ -60,24 +69,22 @@ const Header = ({ isLoggedIn, onLogout }) => {
             </a>
             {isAdmin && (
               <>
-                <a
-                  href="#"
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Manage Events
-                </a>
-                <a
-                  href="#"
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Manage Users
-                </a>
-                <a
-                  href="#"
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                >
-                  Create new Admins
-                </a>
+                <Link to="/user-list">
+                  <a
+                    href="#"
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Manage Users
+                  </a>
+                </Link>
+                <Link to="new-admin">
+                  <a
+                    href="#"
+                    className="text-sm font-semibold leading-6 text-gray-900"
+                  >
+                    Create new Admins
+                  </a>
+                </Link>
                 {/* Add more admin-specific links here */}
               </>
             )}
@@ -93,10 +100,25 @@ const Header = ({ isLoggedIn, onLogout }) => {
           </div>
         )}
         {isLoggedIn ? (
-          <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+          <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mr-2 text-white"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 2a4 4 0 100 8 4 4 0 000-8zM2 12a8 8 0 1116 0c0 2.206-1.794 4-4 4H6a4 4 0 01-4-4zm8 6a6 6 0 006-6H4a6 6 0 006 6z"
+                clipRule="evenodd"
+              />
+            </svg>
+            <p className="text-sm text-gray-300 font-semibold leading-6 text-gray-900">
+              {userInfo.username}
+            </p>
             <button
               onClick={onLogout} // Call onLogout function when logout button is clicked
-              className="bg-blue-900 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-gray-300 mx-6 hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
               Logout
             </button>

@@ -6,7 +6,7 @@ import { AuthContext } from "../auth/AuthContext";
 const UserInfoFetcher = ({ token }) => {
   const { loginUser } = useContext(AuthContext);
   const { data, isPending, error } = useFetch(
-    token ? "http://localhost:5000/user/info" : null,
+    "http://localhost:5000/user/info",
     token
   );
 
@@ -14,7 +14,7 @@ const UserInfoFetcher = ({ token }) => {
     if (data) {
       loginUser(data);
     }
-  }, [data, loginUser]);
+  }, [data]);
 
   return null;
 };
