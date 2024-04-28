@@ -98,23 +98,37 @@ router.put("/update/:id", authenticateToken, isAdmin, async (req, res) => {
 // Route to delete an event (admin-only)
 router.delete("/delete/:id", authenticateToken, isAdmin, async (req, res) => {
   const eventId = req.params.id;
+  const client = await pool.connect();
 
   try {
+    await client.query("BEGIN");
+
+    // Delete associated bookings
+    const deleteBookingsQuery = "DELETE FROM bookings WHERE event_id = $1";
+    const deleteBookingsValues = [eventId];
+    await client.query(deleteBookingsQuery, deleteBookingsValues);
+
+    // Delete the event
     const deleteEventQuery = "DELETE FROM events WHERE id = $1 RETURNING *";
     const deleteEventValues = [eventId];
-    const deleteEventResult = await pool.query(
+    const deleteEventResult = await client.query(
       deleteEventQuery,
       deleteEventValues
     );
 
     if (deleteEventResult.rows.length === 0) {
+      await client.query("ROLLBACK");
       return res.status(404).json({ error: "Event not found" });
     }
 
+    await client.query("COMMIT");
     res.json(deleteEventResult.rows[0]);
   } catch (err) {
+    await client.query("ROLLBACK");
     console.error("Error deleting event:", err.message);
     res.status(500).json({ error: "Internal server error" });
+  } finally {
+    client.release();
   }
 });
 
