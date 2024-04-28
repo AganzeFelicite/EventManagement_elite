@@ -218,12 +218,15 @@ const EventList = () => {
             <p className="text-gray-600 text-sm">
               Available Tickets: {event.available_tickets}
             </p>
+            
+            
           </div>
           <div>
             <button
               onClick={() => bookModal(event.id)}
               className="bg-blue-500 text-white px-4 py-2 rounded-md"
             >
+
               Book Now
             </button>
             {userInfo?.is_admin && (
@@ -305,7 +308,10 @@ const EventList = () => {
                   <input
                     type="text"
                     id="title"
-                    value={title || currentEvent.title}
+                    value={  <RevokeOrReduceTickets
+            booking={booking}
+            handleRevokeOrReduce={handleRevokeOrReduce}
+          />title || currentEvent.title}
                     onChange={(e) => setTitle(e.target.value)}
                     className="block w-full p-2 border border-blue-300 rounded"
                     placeholder="Enter event title"
